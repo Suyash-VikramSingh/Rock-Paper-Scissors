@@ -1,0 +1,113 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.align{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    font-family: 'Courier New', Courier, monospace;
+}
+nav{
+    height: 70px;
+    background-color: rgb(5, 19, 35);
+}
+#heading{
+    color: white;
+    margin: 0px;
+    font-size: 30px;
+}
+section{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.selectors{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    margin: 30px;
+    border: 5px solid white;
+}
+.selectors:hover{
+    border: 5px solid black;
+    cursor: pointer;
+}
+#rock-img{
+    height: 80px;
+    width: 80px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 50%;
+}
+#paper-img{
+    height: 100px;
+    width: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22px;
+    width: 50%;
+}
+#scissors-img{
+    height: 70px;
+    width: 120px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    width: 50%;
+}
+#rock{
+    background-color: pink;
+}
+#paper{
+    background-color: plum;
+}
+#scissors{
+    background-color: skyblue;
+}
+#pick{
+    height: 60px;
+    width: 280px;
+    border-radius: 15px;
+    background-color: #fc6f38eb;
+    color: #792f13;
+    font-size: 25px;
+    font-weight: 700;
+}
+#points div{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.mention{
+    font-size: 28px;
+    font-weight: 550;
+}
+.score{
+    font-size: 40px;
+    text-align: center;
+}
+.dimetions{
+    height: 50px;
+    width: 110px;
+    margin: 0px 27px;
+    border-radius: 15px;
+    font-size: 18px;
+}
+.dimetions:hover{
+    cursor: pointer;
+}
+#newGame{
+    background-color: #afd442;
+    font-weight: 550;
+    color: #07652c;
+}
+#quit{
+    background-color: rgb(253, 57, 57);
+    font-weight: 550;
+    color: rgb(124, 24, 24);
+}
