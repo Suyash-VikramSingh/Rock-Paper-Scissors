@@ -78,6 +78,7 @@ section{
     color: #792f13;
     font-size: 25px;
     font-weight: 700;
+    transition: background-color 0.3s ease;
 }
 #points div{
     padding-left: 20px;
@@ -110,4 +111,20 @@ section{
     background-color: rgb(253, 57, 57);
     font-weight: 550;
     color: rgb(124, 24, 24);
+}
+.result-win {
+    background-color: #65e683 !important;
+    /* transition: background-color 0.3s ease; */
+}
+.result-loss {
+    background-color: #ff9090 !important;
+    /* transition: background-color 0.3s ease; */
+}
+.result-draw {
+    background-color: #ffd36e !important;
+    /* transition: background-color 0.3s ease; */
+}
+.newgame-flash {
+    background-color: #a4d4ff !important;
+    /* transition: background-color 0.3s ease; */
 }

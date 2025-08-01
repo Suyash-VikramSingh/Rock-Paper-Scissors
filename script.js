@@ -5,85 +5,72 @@ let newGame = document.body.querySelector("#newGame");
 let quit = document.body.querySelector("#quit");
 let count = 0
 
-const numbers = [1, 2, 3];
-
-// Function to pick a random number from the array
-function pickRandomNumber(numbers) {
-    // Generate a random index within the range of the array length
-    const randomIndex = Math.floor(Math.random() * numbers.length);
-    // Return the number at the random index
-    return numbers[randomIndex];
+function pickRandomNumber(n) {
+    return Math.floor(Math.random() * n);
 }
 
 // possiblities for all the different choices.
-let choice, stat, selection;
+let calResult = (p_choice) => {
+    let c_choice = pickRandomNumber(3);
+    let curr_res;
 
-let onrock = () => {
-    choice = pickRandomNumber(numbers);
-    if(choice == 1) stat = "loss"; // for paper
-    else if(choice == 2) stat = "draw"; // for rock
-    else stat = "won"; // for scissor
-    selection = rock;
-
-    makeChanges(stat);
+    if(p_choice === c_choice) curr_res = "draw"
+    else if((p_choice+1) % 3 === c_choice) curr_res = "loss";
+    else curr_res = "win";
 
     count++;
-}
-let onpaper = () => {
-    choice = pickRandomNumber(numbers);
-    if(choice == 1) stat = "won"; // for rock
-    else if(choice == 2) stat = "draw"; // for paper
-    else stat = "loss"; // for scissor
-    selection = "paper";
 
-    makeChanges(stat);
-
-    count++;
-}
-let onscissor = () => {
-    choice = pickRandomNumber(numbers);
-    if(choice == 1) stat = "won"; // for paper
-    else if(choice == 2) stat = "draw"; // for scissor
-    else stat = "loss"; // for rock
-    selection = "scissor";
-
-    makeChanges(stat);
-
-    count++;
+    makeChanges(curr_res, c_choice);
 }
 
-rock.addEventListener("mousedown", onrock);
-paper.addEventListener("mousedown",onpaper);
-scissor.addEventListener("mousedown",onscissor);
+rock.addEventListener("mousedown", () => calResult(0));
+paper.addEventListener("mousedown", () => calResult(1));
+scissor.addEventListener("mousedown", () => calResult(2));
 
 // for showing changes on the website.
-
 let score = document.body.querySelectorAll(".score");
 let line = document.body.querySelector("#pick");
-let scrY = 0 , scrC = 0;
+let p_score = 0 , c_score = 0;
 
-function makeChanges(result){
+function makeChanges(result, c_choice){
     if(result === "loss") {
-        line.innerText = "You lost!";
-        score[1].innerText = ++scrC;
+        line.innerText = "You loss!";
+        score[1].innerText = ++c_score;
+        line.classList.add("result-loss");
     }
-    else if(result === "won"){
-        line.innerText = "You won!";
-        score[0].innerText = ++scrY;
+    else if(result === "win"){
+        line.innerText = "You win!";
+        score[0].innerText = ++p_score;
+        line.classList.add("result-win");
     }
     else {
         line.innerText = "Draw!";
+        line.classList.add("result-draw");
     }
+
+    setTimeout(() => {
+      line.classList.remove("result-win", "result-loss", "result-draw");
+    }, 600);
 }
 
 
-// To set new game.
-
+// To set new game or quit.
 let onNewGame = () => {
-    if(count != 0){
-        score[0].innerText = score[1].innerText = scrC = scrY = count = 0;
-        line.innerText = "New Game Start...";
-    }
-}
+  if (count != 0) {
+    c_score = p_score = count = 0;
+    score[0].innerText = 0;
+    score[1].innerText = 0;
+
+    line.innerText = "New Game Start...";
+    line.classList.add("newgame-flash");
+
+    setTimeout(() => {
+      line.classList.remove("newgame-flash");
+      line.innerText = "Pick your move!";
+    }, 1000);
+
+    count = 0;
+  }
+};
 
 newGame.addEventListener("mousedown",onNewGame);
