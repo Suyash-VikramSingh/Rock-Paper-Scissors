@@ -114,17 +114,29 @@ section{
 }
 .result-win {
     background-color: #65e683 !important;
-    /* transition: background-color 0.3s ease; */
 }
 .result-loss {
     background-color: #ff9090 !important;
-    /* transition: background-color 0.3s ease; */
 }
 .result-draw {
     background-color: #ffd36e !important;
-    /* transition: background-color 0.3s ease; */
 }
 .newgame-flash {
     background-color: #a4d4ff !important;
-    /* transition: background-color 0.3s ease; */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 0.3s ease;
 }

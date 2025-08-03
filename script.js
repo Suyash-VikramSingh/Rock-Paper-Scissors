@@ -11,21 +11,33 @@ function pickRandomNumber(n) {
 
 // possiblities for all the different choices.
 let calResult = (p_choice) => {
-    let c_choice = pickRandomNumber(3);
-    let curr_res;
+  let c_choice = pickRandomNumber(3);
+  let curr_res;
 
-    if(p_choice === c_choice) curr_res = "draw"
-    else if((p_choice+1) % 3 === c_choice) curr_res = "loss";
-    else curr_res = "win";
+  if(p_choice === c_choice) curr_res = "draw"
+  else if((p_choice+1) % 3 === c_choice) curr_res = "loss";
+  else curr_res = "win";
 
-    count++;
+  count++;
 
-    makeChanges(curr_res, c_choice);
+  makeChanges(curr_res, c_choice);
 }
 
-rock.addEventListener("mousedown", () => calResult(0));
-paper.addEventListener("mousedown", () => calResult(1));
-scissor.addEventListener("mousedown", () => calResult(2));
+rock.addEventListener("mousedown", () => {
+  rock.classList.add("pulse");
+  setTimeout(() => rock.classList.remove("pulse"), 300);
+  calResult(0);
+});
+paper.addEventListener("mousedown", () => {
+  paper.classList.add("pulse");
+  setTimeout(() => paper.classList.remove("pulse"), 300);
+  calResult(1);
+});
+scissor.addEventListener("mousedown", () => {
+  scissor.classList.add("pulse");
+  setTimeout(() => scissor.classList.remove("pulse"), 300);
+  calResult(2);
+});
 
 // for showing changes on the website.
 let score = document.body.querySelectorAll(".score");
@@ -33,24 +45,24 @@ let line = document.body.querySelector("#pick");
 let p_score = 0 , c_score = 0;
 
 function makeChanges(result, c_choice){
-    if(result === "loss") {
-        line.innerText = "You loss!";
-        score[1].innerText = ++c_score;
-        line.classList.add("result-loss");
-    }
-    else if(result === "win"){
-        line.innerText = "You win!";
-        score[0].innerText = ++p_score;
-        line.classList.add("result-win");
-    }
-    else {
-        line.innerText = "Draw!";
-        line.classList.add("result-draw");
-    }
+  if(result === "loss") {
+    line.innerText = "You loss!";
+    score[1].innerText = ++c_score;
+    line.classList.add("result-loss");
+  }
+  else if(result === "win"){
+    line.innerText = "You win!";
+    score[0].innerText = ++p_score;
+    line.classList.add("result-win");
+  }
+  else {
+    line.innerText = "Draw!";
+    line.classList.add("result-draw");
+  }
 
-    setTimeout(() => {
-      line.classList.remove("result-win", "result-loss", "result-draw");
-    }, 600);
+  setTimeout(() => {
+    line.classList.remove("result-win", "result-loss", "result-draw");
+  }, 600);
 }
 
 
