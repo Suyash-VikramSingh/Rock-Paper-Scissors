@@ -1,70 +1,65 @@
-let rock = document.body.querySelector("#rock");
-let paper = document.body.querySelector("#paper");
-let scissor = document.body.querySelector("#scissors");
+let selectors = document.body.querySelectorAll(".selectors");
+let score = document.body.querySelectorAll(".score");
+let display = document.body.querySelector("#display");
 let newGame = document.body.querySelector("#newGame");
 let quit = document.body.querySelector("#quit");
+
 let count = 0
 
-function pickRandomNumber(n) {
+let n = selectors.length;
+
+const moves = ['rock', 'paper', 'scissors'];
+
+let p_score = 0 , c_score = 0;
+
+function pickRandomNumber() {
     return Math.floor(Math.random() * n);
 }
 
-// possiblities for all the different choices.
-let calResult = (p_choice) => {
-  let c_choice = pickRandomNumber(3);
-  let curr_res;
-
-  if(p_choice === c_choice) curr_res = "draw"
-  else if((p_choice+1) % 3 === c_choice) curr_res = "loss";
-  else curr_res = "win";
-
-  count++;
-
-  makeChanges(curr_res, c_choice);
+function getResult(p, c) {
+  if (p === c) return "draw";
+  else if ((p + 1) % 3 === c) return "loss";
+  else return "win";
 }
 
-rock.addEventListener("mousedown", () => {
-  rock.classList.add("pulse");
-  setTimeout(() => rock.classList.remove("pulse"), 300);
-  calResult(0);
-});
-paper.addEventListener("mousedown", () => {
-  paper.classList.add("pulse");
-  setTimeout(() => paper.classList.remove("pulse"), 300);
-  calResult(1);
-});
-scissor.addEventListener("mousedown", () => {
-  scissor.classList.add("pulse");
-  setTimeout(() => scissor.classList.remove("pulse"), 300);
-  calResult(2);
-});
-
-// for showing changes on the website.
-let score = document.body.querySelectorAll(".score");
-let line = document.body.querySelector("#pick");
-let p_score = 0 , c_score = 0;
-
-function makeChanges(result, c_choice){
+function makeChanges(result){
   if(result === "loss") {
-    line.innerText = "You loss!";
+    display.innerText = "You loss!";
     score[1].innerText = ++c_score;
-    line.classList.add("result-loss");
+    display.classList.add("result-loss");
   }
   else if(result === "win"){
-    line.innerText = "You win!";
+    display.innerText = "You win!";
     score[0].innerText = ++p_score;
-    line.classList.add("result-win");
+    display.classList.add("result-win");
   }
   else {
-    line.innerText = "Draw!";
-    line.classList.add("result-draw");
+    display.innerText = "Draw!";
+    display.classList.add("result-draw");
   }
 
   setTimeout(() => {
-    line.classList.remove("result-win", "result-loss", "result-draw");
+    display.classList.remove("result-win", "result-loss", "result-draw");
   }, 600);
 }
 
+function action(p_choice){
+  const c_choice = pickRandomNumber();
+
+  const result = getResult(p_choice, c_choice);
+
+  selectors[p_choice].classList.add("pulse");
+  setTimeout(() => selectors[p_choice].classList.remove("pulse"), 300);
+
+  makeChanges(result);
+
+  count++;
+}
+
+for(let i = 0; i < n; i++){
+  selector = selectors[i];
+  selector.addEventListener("mousedown", () => action(i));
+}
 
 // To set new game or quit.
 let onNewGame = () => {
@@ -73,12 +68,12 @@ let onNewGame = () => {
     score[0].innerText = 0;
     score[1].innerText = 0;
 
-    line.innerText = "New Game Start...";
-    line.classList.add("newgame-flash");
+    display.innerText = "New Game Start...";
+    display.classList.add("newgame-flash");
 
     setTimeout(() => {
-      line.classList.remove("newgame-flash");
-      line.innerText = "Pick your move!";
+      display.classList.remove("newgame-flash");
+      display.innerText = "Pick your move!";
     }, 1000);
 
     count = 0;
