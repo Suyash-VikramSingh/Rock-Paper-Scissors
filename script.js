@@ -4,13 +4,14 @@ let display = document.body.querySelector("#display");
 let newGame = document.body.querySelector("#newGame");
 let quit = document.body.querySelector("#quit");
 
-let count = 0
+let gameStarted = false;
+let gameOver = false;
 
 let n = selectors.length;
 
 const moves = ['rock', 'paper', 'scissors'];
 
-let p_score = 0 , c_score = 0;
+let playerScore = 0, compScore  = 0;
 
 function pickRandomNumber() {
     return Math.floor(Math.random() * n);
@@ -25,12 +26,12 @@ function getResult(p, c) {
 function makeChanges(result){
   if(result === "loss") {
     display.innerText = "You loss!";
-    score[1].innerText = ++c_score;
+    score[1].innerText = ++compScore ;
     display.classList.add("result-loss");
   }
   else if(result === "win"){
     display.innerText = "You win!";
-    score[0].innerText = ++p_score;
+    score[0].innerText = ++playerScore ;
     display.classList.add("result-win");
   }
   else {
@@ -43,28 +44,40 @@ function makeChanges(result){
   }, 600);
 }
 
-function action(p_choice){
-  const c_choice = pickRandomNumber();
+function action(playerChoice){
+  if(gameOver) return;
 
-  const result = getResult(p_choice, c_choice);
+  const compChoice = pickRandomNumber();
+  const result = getResult(playerChoice, compChoice);
 
-  selectors[p_choice].classList.add("pulse");
-  setTimeout(() => selectors[p_choice].classList.remove("pulse"), 300);
+  selectors[playerChoice].classList.add("pulse");
+  setTimeout(() => selectors[playerChoice].classList.remove("pulse"), 300);
 
   makeChanges(result);
 
-  count++;
+  gameStarted = true;
+
+  if(playerScore === 3 || compScore === 3){
+    gameOver = true;
+    display.innerHTML = playerScore === 3 ? "You won the game!" : "Computer wins the game!";
+
+    display.classList.add("game-over-text", "bounce");
+    setTimeout(() => display.classList.remove("bounce"), 400);
+  }
 }
 
 for(let i = 0; i < n; i++){
   selector = selectors[i];
-  selector.addEventListener("mousedown", () => action(i));
+  selector.addEventListener("click", () => action(i));
 }
 
 // To set new game or quit.
 let onNewGame = () => {
-  if (count != 0) {
-    c_score = p_score = count = 0;
+  if (gameStarted) {
+    compScore  = playerScore = 0;
+    gameStarted = false;
+    gameOver = false;
+
     score[0].innerText = 0;
     score[1].innerText = 0;
 
@@ -76,8 +89,8 @@ let onNewGame = () => {
       display.innerText = "Pick your move!";
     }, 1000);
 
-    count = 0;
+    gameStarted = false;
   }
 };
 
-newGame.addEventListener("mousedown",onNewGame);
+newGame.addEventListener("click",onNewGame);
